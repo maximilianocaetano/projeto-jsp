@@ -1,0 +1,31 @@
+CREATE DATABASE "projeto-jsp"
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Portuguese_Brazil.1252'
+       LC_CTYPE = 'Portuguese_Brazil.1252'
+       CONNECTION LIMIT = -1;
+
+********************************************************
+CREATE TABLE model_login
+(
+  id integer NOT NULL DEFAULT nextval('model_login_id_sequence'::regclass),
+  nome character varying(300) NOT NULL,
+  login character varying(200) NOT NULL,
+  senha character varying(200) NOT NULL,
+  email character varying(300) NOT NULL,
+  CONSTRAINT model_login_pkey PRIMARY KEY (id),
+  CONSTRAINT login_unique UNIQUE (login)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE model_login
+  OWNER TO postgres;
+
+  
+*******************************************************  
+  
+  INSERT INTO model_login(
+            login, senha)
+    VALUES ('1', '1');
