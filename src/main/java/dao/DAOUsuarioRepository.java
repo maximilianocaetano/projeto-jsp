@@ -52,29 +52,52 @@ public class DAOUsuarioRepository {
 		return this.consultaUsuario(objeto.getLogin());
 
 	}
-	
-	public List<ModelLogin> consultaUsuarioList(String nome) throws Exception{
-		
+
+	public List<ModelLogin> consultaUsuarioList() throws Exception {
+
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		
-		String sql = "select * from model_login where upper(nome) like upper(?)";
+
+		String sql = "select * from model_login";
 		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1,"%" + nome + "%");
-		
+
 		ResultSet resultado = statement.executeQuery();
-		
-		while(resultado.next()) {
+
+		while (resultado.next()) {
 			ModelLogin modelLogin = new ModelLogin();
 			modelLogin.setEmail(resultado.getString("email"));
 			modelLogin.setId(resultado.getLong("id"));
 			modelLogin.setLogin(resultado.getString("login"));
 			modelLogin.setNome(resultado.getString("nome"));
-			
+
 			retorno.add(modelLogin);
 		}
-		
+
 		return retorno;
-		
+
+	}
+
+	public List<ModelLogin> consultaUsuarioList(String nome) throws Exception {
+
+		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+
+		String sql = "select * from model_login where upper(nome) like upper(?)";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, "%" + nome + "%");
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			ModelLogin modelLogin = new ModelLogin();
+			modelLogin.setEmail(resultado.getString("email"));
+			modelLogin.setId(resultado.getLong("id"));
+			modelLogin.setLogin(resultado.getString("login"));
+			modelLogin.setNome(resultado.getString("nome"));
+
+			retorno.add(modelLogin);
+		}
+
+		return retorno;
+
 	}
 
 	public ModelLogin consultaUsuario(String login) throws Exception {
@@ -97,7 +120,7 @@ public class DAOUsuarioRepository {
 
 		return modelLogin;
 	}
-	
+
 	public ModelLogin consultaUsuarioID(String id) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -106,7 +129,7 @@ public class DAOUsuarioRepository {
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(id));
-		
+
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
